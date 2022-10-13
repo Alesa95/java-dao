@@ -1,15 +1,11 @@
 package prMangas;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
-import prMangas.Manga;
-import prMangas.DatabaseConnection;
 
 public abstract class MangaDAO {
 	
@@ -19,7 +15,7 @@ public abstract class MangaDAO {
 		
 		ArrayList<Manga> mangas = new ArrayList<>();
 		
-		Statement smt = openConnection();
+		Connection connection = openConnection();
 		
 		String query = null;
 		PreparedStatement preparedStatement = null;
@@ -48,7 +44,7 @@ public abstract class MangaDAO {
 	public static Manga findById (int id) {
 		Manga manga = null;
 		
-		Statement smt = openConnection();
+		Connection connection = openConnection();
 		
 		String query = null;
 		PreparedStatement preparedStatement = null;
@@ -77,7 +73,7 @@ public abstract class MangaDAO {
 	}
 	
 	public static void insertManga(Manga manga) {
-		Statement smt = openConnection();
+		Connection connection = openConnection();
 		
 		String query = null;
 		PreparedStatement preparedStatement = null;
@@ -100,7 +96,7 @@ public abstract class MangaDAO {
 		String name = manga.getName();
 		String author = manga.getAuthor();
 		int pages = manga.getPages();
-		Statement smt = openConnection();
+		Connection connection = openConnection();
 		try {
 			String query = "update mangas set name = ?, author = ?, pages = ? WHERE id = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -113,13 +109,13 @@ public abstract class MangaDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		closeConnection(smt);
+		closeConnection();
 	}
 	
 	//	Método para eliminar un manga
 	public static void deleteManga(Manga manga) {
 		int id = manga.getId();
-		Statement smt = openConnection();
+		Connection connection = openConnection();
 		try {
 			String query = "delete from mangas where id = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -129,44 +125,35 @@ public abstract class MangaDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		closeConnection(smt);
+		closeConnection();
 	}
 	
 	//	Método para eliminar todos los mangas
 	public static void deleteAllMangas() {
-		Statement smt = openConnection();
+		Connection connection = openConnection();
 		try {
+			Statement smt = connection.createStatement();
 			smt.executeUpdate("delete from mangas");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		closeConnection(smt);
+		closeConnection();
 	}
 
 	//	Método para abrir la conexión
-	private static Statement openConnection() {
+	private static Connection openConnection() {
 		
-		try {
-			DatabaseConnection dbConnection = new DatabaseConnection();
-			connection = dbConnection.getConnection();
-			return connection.createStatement();
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
+		DatabaseConnection dbConnection = new DatabaseConnection();
+		connection = dbConnection.getConnection();
+		return connection;
 	}
 	
 	//	Método para abrir la conexión
-	private static void closeConnection(Statement smt) {
+	private static void closeConnection() {
 		try {
-			smt.close();
-			if(connection!=null) {
-				connection.close();
-				connection=null;
-			}
+			connection.close();
+			connection = null;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
