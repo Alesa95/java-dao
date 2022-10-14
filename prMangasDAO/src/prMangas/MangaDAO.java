@@ -17,14 +17,10 @@ public abstract class MangaDAO {
 		
 		Connection connection = openConnection();
 		
-		String query = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		
 		try {
-			query = "select * from mangas";
-			preparedStatement = connection.prepareStatement(query);
-			resultSet = preparedStatement.executeQuery();
+			String query = "select * from mangas";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
 				mangas.add(new Manga(
@@ -45,16 +41,12 @@ public abstract class MangaDAO {
 		Manga manga = null;
 		
 		Connection connection = openConnection();
-		
-		String query = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		
+				
 		try {
-			query = "select * from mangas where id = ?";
-			preparedStatement = connection.prepareStatement(query);
+			String query = "select * from mangas where id = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, id);
-			resultSet = preparedStatement.executeQuery();
+			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
 				manga = new Manga(
@@ -74,13 +66,10 @@ public abstract class MangaDAO {
 	
 	public static void insertManga(Manga manga) {
 		Connection connection = openConnection();
-		
-		String query = null;
-		PreparedStatement preparedStatement = null;
-		
+				
 		try {
-			query = "insert into mangas (name, author, pages) values (?, ?, ?)";
-			preparedStatement = connection.prepareStatement(query);
+			String query = "insert into mangas (name, author, pages) values (?, ?, ?)";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, manga.getName());
 			preparedStatement.setString(2, manga.getAuthor());
 			preparedStatement.setInt(3, manga.getPages());
