@@ -93,7 +93,7 @@ public class SerieDao implements Dao<Serie> {
 		Connection connection = openConnection();
 		
 		try {
-			String query = "select (id, num_temporada, titulo) from temporadas where id = ?";
+			String query = "select * from temporadas where serie_id = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, serie.getId()); 
 			ResultSet resultSet = preparedStatement.executeQuery();

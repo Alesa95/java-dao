@@ -1,5 +1,7 @@
 package prSeriesDAO;
 
+import java.util.ArrayList;
+
 import dao.SerieDao;
 import dao.TemporadaDao;
 import pojo.Serie;
@@ -13,13 +15,17 @@ public class Main {
 		SerieDao serieDao = new SerieDao();
 		//serieDao.insertar(s); 
 		Serie s = serieDao.getById(2);
-		//Temporada t = new Temporada(1, "Mobile Suit Gundam: The Witch from Mercury Part 1", s);
+		//Temporada t = new Temporada(2, "Mobile Suit Gundam: The Witch from Mercury Part 2", s);
 		TemporadaDao temporadaDao = new TemporadaDao();
+		//temporadaDao.insertar(t); 
 		
 		System.out.println(s); 
 		
-		//temporadaDao.insertar(t); 
-		System.out.println(serieDao.getTemporadas(s));
+		ArrayList<Temporada> temporadas = serieDao.getTemporadas(s);
+		
+		for (int i = 0; i < temporadas.size(); i++) {
+			System.out.println(temporadas.get(i).getTitulo());
+		}
 	}
 
 }
