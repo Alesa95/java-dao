@@ -56,7 +56,7 @@ public class SerieDao implements Dao<Serie> {
 	}
 
 	@Override
-	public void insertar(Serie t) {
+	public void insert(Serie t) {
 		// TODO Auto-generated method stub
 		Connection connection = openConnection();
 		
@@ -75,13 +75,13 @@ public class SerieDao implements Dao<Serie> {
 	}
 
 	@Override
-	public void modificar(Serie t) {
+	public void modify(Serie t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void borrar(Serie t) {
+	public void delete(Serie t) {
 		// TODO Auto-generated method stub
 		
 	}

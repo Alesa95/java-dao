@@ -30,7 +30,7 @@ public class TemporadaDao implements Dao<Temporada> {
 	}
 
 	@Override
-	public void insertar(Temporada t) {
+	public void insert(Temporada t) {
 		// TODO Auto-generated method stub
 		Connection connection = openConnection();
 		
@@ -49,13 +49,13 @@ public class TemporadaDao implements Dao<Temporada> {
 	}
 
 	@Override
-	public void modificar(Temporada t) {
+	public void modify(Temporada t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void borrar(Temporada t) {
+	public void delete(Temporada t) {
 		// TODO Auto-generated method stub
 		
 	}
