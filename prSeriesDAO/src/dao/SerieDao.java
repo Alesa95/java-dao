@@ -5,13 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Optional;
 
 import pojo.Serie;
 import pojo.Temporada;
-import util.DatabaseConnection;
 
-public class SerieDao implements Dao<Serie> {
+public class SerieDao extends ObjetoDao implements InterfazDao<Serie> {
 	
 	private static Connection connection;
 	
@@ -28,7 +26,7 @@ public class SerieDao implements Dao<Serie> {
 	@Override
 	public Serie getById(int id) {
 		// TODO Auto-generated method stub
-		Connection connection = openConnection();
+		connection = openConnection();
 		
 		Serie serie = null;
 		
@@ -58,7 +56,7 @@ public class SerieDao implements Dao<Serie> {
 	@Override
 	public void insert(Serie t) {
 		// TODO Auto-generated method stub
-		Connection connection = openConnection();
+		connection = openConnection();
 		
 		try {
 			String query = "insert into series (titulo, edad, plataforma) values (?, ?, ?)";
@@ -90,7 +88,7 @@ public class SerieDao implements Dao<Serie> {
 		
 		ArrayList<Temporada> temporadas = new ArrayList<>();
 		
-		Connection connection = openConnection();
+		connection = openConnection();
 		
 		try {
 			String query = "select * from temporadas where serie_id = ?";
@@ -112,23 +110,4 @@ public class SerieDao implements Dao<Serie> {
 		return temporadas;
 	}
 	
-	//	Método para abrir la conexión
-	private static Connection openConnection() {
-		
-		DatabaseConnection dbConnection = new DatabaseConnection();
-		connection = dbConnection.getConnection();
-		return connection;
-	}
-	
-	//	Método para abrir la conexión
-	private static void closeConnection() {
-		try {
-			connection.close();
-			connection = null;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 }

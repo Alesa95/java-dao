@@ -4,12 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Optional;
 
 import pojo.Temporada;
-import util.DatabaseConnection;
 
-public class TemporadaDao implements Dao<Temporada> {
+public class TemporadaDao extends ObjetoDao implements InterfazDao<Temporada> {
 	
 	private static Connection connection;
 	
@@ -18,7 +16,7 @@ public class TemporadaDao implements Dao<Temporada> {
 	}
 
 	@Override
-	public ArrayList getAll() {
+	public ArrayList<Temporada> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -32,7 +30,7 @@ public class TemporadaDao implements Dao<Temporada> {
 	@Override
 	public void insert(Temporada t) {
 		// TODO Auto-generated method stub
-		Connection connection = openConnection();
+		connection = openConnection();
 		
 		try {
 			String query = "insert into temporadas (num_temporada, titulo, serie_id) values (?, ?, ?)";
@@ -60,23 +58,4 @@ public class TemporadaDao implements Dao<Temporada> {
 		
 	}
 	
-//	Método para abrir la conexión
-	private static Connection openConnection() {
-		
-		DatabaseConnection dbConnection = new DatabaseConnection();
-		connection = dbConnection.getConnection();
-		return connection;
-	}
-	
-	//	Método para abrir la conexión
-	private static void closeConnection() {
-		try {
-			connection.close();
-			connection = null;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 }

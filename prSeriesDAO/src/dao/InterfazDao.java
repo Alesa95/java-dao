@@ -2,7 +2,7 @@ package dao;
 
 import java.util.ArrayList;
 
-public interface Dao<T> {
+public interface InterfazDao<T> {
         
     public ArrayList<T> getAll();
     
