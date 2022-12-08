@@ -10,6 +10,17 @@ public class Serie {
 	private String plataforma;
 	private ArrayList<Temporada> temporadas;
 	
+	/**
+	 * Crea una nueva serie. Se recomienda emplear este metodo para instanciar
+	 * una serie ya existente obtenida de la base de datos. No se recomienda 
+	 * emplear este metodo al crear una nueva serie localmente para luego 
+	 * insertarla en la base de datos
+	 * 
+	 * @param id
+	 * @param titulo
+	 * @param edad
+	 * @param plataforma
+	 */
 	public Serie(int id, String titulo, int edad, String plataforma) {
 		super();
 		this.id = id;
@@ -18,6 +29,14 @@ public class Serie {
 		this.plataforma = plataforma;
 	}
 	
+	/**
+	 * Crea una nueva serie. Se recomienda emplear este metodo al crear una 
+	 * nueva serie localmente para luego insertarla en la base de datos
+	 * 
+	 * @param titulo
+	 * @param edad
+	 * @param plataforma
+	 */
 	public Serie(String titulo, int edad, String plataforma) {
 		super();
 		this.edad = edad;

@@ -16,11 +16,74 @@ public class SerieDao extends ObjetoDao implements InterfazDao<Serie> {
 	public SerieDao () {
 		
 	}
+	
+	private int getRowCount(ResultSet resultSet) {
+	    if (resultSet == null) {
+	        return 0;
+	    }
 
+	    try {
+	        resultSet.last();
+	        return resultSet.getRow();
+	    } catch (SQLException exp) {
+	        exp.printStackTrace();
+	    } finally {
+	        try {
+	            resultSet.beforeFirst();
+	        } catch (SQLException exp) {
+	            exp.printStackTrace();
+	        }
+	    }
+
+	    return 0;
+	}
+			
 	@Override
 	public ArrayList<Serie> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		connection = openConnection();
+		
+		ArrayList<Serie> series = new ArrayList<>();
+		
+		try {
+			String query = "select * from series";
+			PreparedStatement ps = connection.prepareStatement(query);
+			ResultSet rs_series = ps.executeQuery();
+			
+			//getRowCount(resultSet);
+			
+			while (rs_series.next()) {
+				Serie serie = new Serie(
+						rs_series.getInt("id"),
+						rs_series.getString("titulo"),
+						rs_series.getInt("edad"),
+						rs_series.getString("plataforma")
+				);
+				
+				ArrayList<Temporada> temporadas = new ArrayList<Temporada>();
+				query = "select * from temporadas where serie_id = ?";
+				PreparedStatement ps2 = connection.prepareStatement(query);
+				ps2.setInt(1, serie.getId()); 
+				ResultSet setTemporadas = ps2.executeQuery();
+				
+				while (setTemporadas.next()) {
+					temporadas.add(new Temporada(
+							setTemporadas.getInt("id"),
+							setTemporadas.getInt("num_temporada"),
+							setTemporadas.getString("titulo")
+					));
+				}
+				
+				serie.setTemporadas(temporadas); 
+				
+				series.add(serie);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		closeConnection();
+		
+		return series;
 	}
 
 	@Override
@@ -84,6 +147,11 @@ public class SerieDao extends ObjetoDao implements InterfazDao<Serie> {
 		
 	}
 	
+	/**
+	 * 
+	 * @param serie
+	 * @return	un ArrayList con las temporadas de la serie
+	 */
 	public ArrayList<Temporada> getTemporadas(Serie serie) {
 		
 		ArrayList<Temporada> temporadas = new ArrayList<>();

@@ -9,7 +9,12 @@ public class ObjetoDao {
 	
 	private static Connection connection;
 
-	//	Método para abrir la conexión
+	/**
+	 * Abre la conexión con la base de datos
+	 * 
+	 * @return	una instancia del objeto Connection con la conexión a la
+	 * base de datos especificada en la clase DatabaseConnection
+	 */
 	protected static Connection openConnection() {
 		
 		DatabaseConnection dbConnection = new DatabaseConnection();
@@ -17,8 +22,10 @@ public class ObjetoDao {
 		return connection;
 	}
 	
-	//	Método para abrir la conexión
-	protected static void closeConnection() {
+	/**
+	 * Cierra la conexion con la base de datos
+	 */
+	protected static void closeConnection() { 
 		try {
 			connection.close();
 			connection = null;
